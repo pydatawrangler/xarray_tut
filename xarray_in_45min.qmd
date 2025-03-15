@@ -1,0 +1,102 @@
+---
+jupyter: python3
+---
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+import xarray as xr
+```
+
+```{python}
+xr.set_options(keep_attrs=True, display_expand_data=False)
+np.set_printoptions(threshold=10, edgeitems=2)
+
+%xmode minimal
+%matplotlib inline
+%config InlineBackend.figure_format = 'retina'
+```
+
+xarray-data is here: https://github.com/pydata/xarray-data/tree/master
+
+```{python}
+ds = xr.open_dataset('data/air_temperature.nc')
+ds
+```
+
+```{python}
+da = ds["air"]
+da.name
+```
+
+```{python}
+da.dims
+```
+
+```{python}
+da.coords
+```
+
+```{python}
+da.lon
+```
+
+```{python}
+da.coords['lon']
+```
+
+```{python}
+da.attrs
+```
+
+```{python}
+da.attrs["who_is_awesome"] = "xarray"
+da.attrs
+```
+
+```{python}
+da
+```
+
+```{python}
+da.data
+```
+
+```{python}
+type(da.data)
+```
+
+```{python}
+# plot the first timestep
+lat = ds.air.lat.data
+lon = ds.air.lon.data
+temp = ds.air.data
+
+plt.figure()
+plt.pcolormesh(lon, lat, temp[0, :, :]);
+
+temp.mean(axis=1)
+```
+
+```{python}
+ds.air.isel(time=0).plot(x="lon");
+```
+
+```{python}
+ds.air.mean(dim="time").plot(x="lon")
+```
+
+```{python}
+ds.sel(time="2013-05")
+ds.sel(time=slice("2013-05", "2013-07"))
+ds.sel(time="2013")
+```
+
+```{python}
+ds.sel(lon=240.2, method="nearest")
+ds.sel(lon=[240.125, 234], lat=[40.3, 50.3], method="nearest")
+```
+
+STOPPED AT POSITION BASED INDEXING
+
+
