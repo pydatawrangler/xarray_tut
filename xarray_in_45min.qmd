@@ -117,3 +117,20 @@ ds.air.isel(lat=slice(10))
 ```
 
 ## Concepts for computation
+
+```{python}
+# Earth's average radius in meters
+R = 6.371e6
+
+# Coordinate spacing for this dataset is 2.5 x 2.5 degrees
+dϕ = np.deg2rad(2.5)
+dλ = np.deg2rad(2.5)
+
+dlat = R * dϕ * xr.ones_like(ds.air.lon)
+dlon = R * dλ * np.cos(np.deg2rad(ds.air.lat))
+dlon.name = "dlon"
+dlat.name = "dlat"
+
+# returns an xarray DataArray!
+np.cos(np.deg2rad(ds.lat))
+```
