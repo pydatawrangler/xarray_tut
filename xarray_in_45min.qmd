@@ -1,6 +1,13 @@
 ---
-jupyter: python3
+title: XARRAY IN 45 MINUTES
+format:
+    html:
+        self-contained: true
 ---
+
+Link to XARRAY tutorial: https://tutorial.xarray.dev/intro.html
+
+
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -97,6 +104,16 @@ ds.sel(lon=240.2, method="nearest")
 ds.sel(lon=[240.125, 234], lat=[40.3, 50.3], method="nearest")
 ```
 
-STOPPED AT POSITION BASED INDEXING
+## Position-based indexing
 
+```{python}
+ds.air.data[0, 2, 3]
 
+# pull out time index 0, lat index 2, and lon index 3
+ds.air.isel(time=0, lat=2, lon=3)
+
+# demonstrate slicing
+ds.air.isel(lat=slice(10))
+```
+
+## Concepts for computation
